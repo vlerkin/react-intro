@@ -1,10 +1,10 @@
 
 import { useRouter } from "next/router";
-import {animals} from '../animals';
-import {Animal} from '../animals';
+import { animals } from '../animals';
+import { Animal } from '../animals';
+import { animalEmojies } from '../../components/AnimalsList';
 
 const pageOfAnAnimal = () => {
-    const animalEmojies = { "cow":"🐮", "chicken":"🐔", "pig":"🐷", "sheep":"🐑"}
     const router = useRouter();
     const { id } = router.query;
     if (!id || typeof id !== 'string') {
