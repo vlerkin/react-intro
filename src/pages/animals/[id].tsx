@@ -4,29 +4,39 @@ import animalsJson from '../../data/animals.json';
 import { Animal } from '../animals';
 import { animalEmojies } from '../../components/AnimalsList';
 import { useState, useEffect } from "react";
+import axios from 'axios';
 
 const pageOfAnAnimal = () => {
 
     
     const animals = animalsJson as Animal[]
     const [animalState, setAnimalState] = useState(animals);
-    //const [count, setCount] = useState(0);
 
     const router = useRouter();
     const idFromUrl = Number(router.query.id);
-    const animalFromUrl = animalState.find((animal) => animal.id === idFromUrl);
+   
+    useEffect(() => {
+        const getAnimalFromApi = async () => {
+            const idFromUrlIsNumber = !Number.isNaN(idFromUrl)
+            
+            if (idFromUrlIsNumber) {
+                const animal = await axios.get(
+                `https://reader.mindmingle.nl/api/exercises/react/animals/${idFromUrl}`
+                );
+                setAnimal(animal.data);
+            }
+        };
+     
+        getAnimalFromApi();
+      }, [idFromUrl]);
 
+    const [animal, setAnimal] = useState<Animal | null>(null);
+    //calling an animal object for every request with a different URL
 
-    // /*
-    // const clickHadlerIncrease = () => {
-    //     setCount(count + 1);
-    //     window.alert("You've clicked me and INCREASED the counter!")
-    // };
-    // const clickHadlerDecrease = () => {
-    //     setCount(count - 1);
-    //     window.alert("You've clicked me and DECREASED the counter!")
-    // };
-    // */
+    useEffect(() => {
+        console.log("🌾 Yummy!");
+    }, [animalState]);
+
     
     const fedAnimals =() => {
         const feedAnimal = animalState.map((animal) => {
@@ -35,25 +45,20 @@ const pageOfAnAnimal = () => {
         })
         setAnimalState(feedAnimal);
     };
-
-    useEffect(() => {
-        console.log("🌾 Yummy!");
-    }, [animalState]);
  
     
-    if (!animalFromUrl) {
+    if (!animal) {
         return <p>No animal</p>
     }
-
 
     return (
         <div>
             Test
-            <h1>{ animalFromUrl.name} the {animalFromUrl.kind} {animalEmojies[animalFromUrl.kind]}</h1>
-            <p>{`I am ${animalFromUrl.age} years old!`}</p>
-            <p>{animalFromUrl.hasBeenFed === true? "😊 I am happy and fed": "🌾 Hungry, give me some food!"}</p>
-            {(!animalFromUrl.hasBeenFed) && <button onClick={fedAnimals}>Feed me</button>}
-            <p>{animalFromUrl.age <= 2 ? "[young]": "[old]"}</p>
+            <h1>{ animal.name} the {animal.kind} {animalEmojies[animal.kind]}</h1>
+            <p>{`I am ${animal.age} years old!`}</p>
+            <p>{animal.hasBeenFed === true? "😊 I am happy and fed": "🌾 Hungry, give me some food!"}</p>
+            {(!animal.hasBeenFed) && <button onClick={fedAnimals}>Feed me</button>}
+            <p>{animal.age <= 2 ? "[young]": "[old]"}</p>
         </div>
     )
 }
