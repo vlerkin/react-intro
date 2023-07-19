@@ -1,4 +1,5 @@
 import AnimalsList from '../components/AnimalsList';
+import animals from '../data/animals.json';
 
 type AnimalKind = "cow" | "sheep" | "chicken" | "pig";
  
@@ -9,7 +10,7 @@ export interface Animal {
   age: number;
   hasBeenFed: boolean;
 }
- 
+ /*
  export const animals: Animal[] = [
   { id: 1, name: "Bessie", kind: "cow", age: 4, hasBeenFed: false },
   { id: 2, name: "Dolly", kind: "sheep", age: 2, hasBeenFed: true },
@@ -28,7 +29,7 @@ export interface Animal {
   { id: 15, name: "Feathers", kind: "chicken", age: 2, hasBeenFed: true },
   { id: 16, name: "Piglet", kind: "pig", age: 4, hasBeenFed: true }
 ];
-
+*/
 const animalFromFind = animals.find((animal) => animal.name === "Feathers");
 
 const Animals = () => {
