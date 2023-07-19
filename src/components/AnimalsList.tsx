@@ -1,4 +1,4 @@
-import { animals } from '../pages/animals';
+import animals from '../data/animals.json';
 
 interface animalKind {
     kind: "cow" | "chicken" | "pig" | "sheep";
