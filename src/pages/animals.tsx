@@ -1,16 +1,17 @@
-import AnimalsList from '../components/AnimalsList';
-import animals from '../data/animals.json';
+import AnimalsList from "../components/AnimalsList";
+import animals from "../data/animals.json";
 
 type AnimalKind = "cow" | "sheep" | "chicken" | "pig";
- 
+
 export interface Animal {
   id: number;
   name: string;
   kind: AnimalKind;
   age: number;
   hasBeenFed: boolean;
+  imgUrl: string;
 }
- /*
+/*
  export const animals: Animal[] = [
   { id: 1, name: "Bessie", kind: "cow", age: 4, hasBeenFed: false },
   { id: 2, name: "Dolly", kind: "sheep", age: 2, hasBeenFed: true },
@@ -33,27 +34,36 @@ export interface Animal {
 const animalFromFind = animals.find((animal) => animal.name === "Feathers");
 
 const Animals = () => {
-    return (
-      <div>
-        <h1>Welcome to the farm!</h1>
-        {(!animalFromFind) ? null : <h2>Today in the spotlight: {animalFromFind.name} the {animalFromFind.kind}</h2>} 
-        <ul>
-          {animals
+  return (
+    <div>
+      <h1>Welcome to the farm!</h1>
+      {!animalFromFind ? null : (
+        <h2>
+          Today in the spotlight: {animalFromFind.name} the{" "}
+          {animalFromFind.kind}
+        </h2>
+      )}
+      <ul>
+        {animals
           .filter((animal) => animal.kind === "cow")
-          .sort((a,b) => a.age-b.age)
+          .sort((a, b) => a.age - b.age)
           .map((animal) => {
             return (
               <li key={animal.id}>
                 <h2>{animal.name}</h2>
                 <p>{`I am a ${animal.age} year old ${animal.kind}!`}</p>
-                {animal.hasBeenFed ? <p>I am happy 😌</p> : <p>I am hungry 🥺</p>}
+                {animal.hasBeenFed ? (
+                  <p>I am happy 😌</p>
+                ) : (
+                  <p>I am hungry 🥺</p>
+                )}
               </li>
             );
           })}
-        </ul>
-        <AnimalsList kind="cow" />
-      </div>
-    );
-  };
- 
+      </ul>
+      <AnimalsList kind="cow" />
+    </div>
+  );
+};
+
 export default Animals;

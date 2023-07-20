@@ -13,14 +13,14 @@ const AnimalsList = (props: animalKind) => {
     const [animals, setAnimals] = useState<Animal[]>([]);
     useEffect(() => {
         const getAnimalsFromApi = async () => {
-          const animals = await axios.get(
+          const animal = await axios.get(
             "https://reader.mindmingle.nl/api/exercises/react/animals"
           );
-          setAnimals(animals.data);
+          setAnimals(animal.data);
         };
      
         getAnimalsFromApi();
-      }, []);
+    }, []);
     
     return (<>{animals
     .filter((animal) => animal.kind === props.kind)
